@@ -1,12 +1,16 @@
-def solve_1(input):
+def solve(input, length):
     line = input.pop()
-    for i in range(len(line)-4):
-        if len(set(line[i:i+4])) == 4:
-            return i + 4
+    for i in range(len(line) - length):
+        if len(set(line[i:i + length])) == length:
+            return i + length
+
+
+def solve_1(input):
+    return solve(input, 4)
 
 
 def solve_2(input):
-    pass
+    return solve(input, 14)
 
 
 if __name__ == "__main__":
