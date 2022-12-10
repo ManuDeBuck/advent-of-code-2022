@@ -2,7 +2,7 @@ import math
 import re
 
 
-def solve_1(input):
+def solve(input, keep_order):
     # preprocess staple array
     crates = []
     line = input.pop(0)
@@ -24,7 +24,10 @@ def solve_1(input):
         staple_amount, staple_from, staple_to = map(int,
                                                     list(re.search(r"^[^0-9]*([0-9]+)[^0-9]*([0-9]+)[^0-9]*([0-9]+)$",
                                                                    command).groups()))
-        staples[staple_to - 1] = staples[staple_from - 1][:staple_amount][::-1] + staples[staple_to - 1]
+        if not keep_order:
+            staples[staple_to - 1] = staples[staple_from - 1][:staple_amount][::-1] + staples[staple_to - 1]
+        else:
+            staples[staple_to - 1] = staples[staple_from - 1][:staple_amount] + staples[staple_to - 1]
         staples[staple_from - 1] = staples[staple_from - 1][staple_amount:]
 
     return "".join([staple[0] if len(staple) else " " for staple in staples])
@@ -38,9 +41,9 @@ if __name__ == "__main__":
     day = "d5"
     with open(f"../inputs/{day}/input_simple.txt") as fh:
         lines = [line.strip("\n") for line in fh.readlines()]
-        print(f"solution to puzzle 1 {solve_1(lines[:])}")
-        print(f"solution to puzzle 2 {solve_2(lines[:])}")
+        print(f"solution to puzzle 1 {solve(lines[:], False)}")
+        print(f"solution to puzzle 2 {solve(lines[:], True)}")
     with open(f"../inputs/{day}/input.txt") as fh:
         lines = [line.strip("\n") for line in fh.readlines()]
-        print(f"solution to puzzle 1 {solve_1(lines[:])}")
-        print(f"solution to puzzle 2 {solve_2(lines[:])}")
+        print(f"solution to puzzle 1 {solve(lines[:], False)}")
+        print(f"solution to puzzle 2 {solve(lines[:], True)}")
